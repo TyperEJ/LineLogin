@@ -1,6 +1,6 @@
 # LineLogin
 ```composer
-composer require typerej/line-login dev-master
+composer require typerej/line-login dev-master --prefer-dist
 ```
 # HOW TO USE
 
