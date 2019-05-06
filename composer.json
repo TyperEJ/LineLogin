@@ -1,0 +1,22 @@
+{
+    "name": "typerej/line-login",
+    "description": "line-login",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*",
+        "ext-curl":"*"
+    },
+    "autoload": {
+        "psr-4": {
+            "TyperEJ\\LineLogin\\": "src"
+        }
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        }
+    }
+}
