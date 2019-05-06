@@ -13,11 +13,11 @@ class Login {
         $this->curl = new Curl();
     }
 
-    public function requestToken($code)
+    public function requestToken($code,$redirectUri = '')
     {
         $params = [
             'grant_type' => 'authorization_code',
-            'redirect_uri'=> $this->getCurrentUrl(),
+            'redirect_uri'=> $redirectUri ?? $this->getCurrentUrl(),
             'code'=> $code,
             'client_id'=> $this->clientId,
             'client_secret'=> $this->clientSecret,
