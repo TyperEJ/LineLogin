@@ -6,7 +6,7 @@ class UserInfo
     public $uid;
     public $name;
     public $picture;
-    public $friendship;
+    private $accessToken;
 
     public function __construct($response)
     {
@@ -26,12 +26,12 @@ class UserInfo
         $this->uid = $info['sub'];
         $this->name = $info['name'];
         $this->picture = $info['picture'];
-        $this->setFriendship($response);
+        $this->accessToken = $response->access_token;
     }
 
-    private function setFriendship($response)
+    public function getFriendship()
     {
-        $curl = new Curl($response->access_token);
+        $curl = new Curl($this->accessToken);
 
         $response = $curl->get(UrlEnum::STATUS_URL);
 
