@@ -12,7 +12,7 @@ class UserInfo
     {
         if(isset(json_decode($response)->error)){
             $errorMessage = json_decode($response)->error_description ?? 'Info Response Error';
-            throw new \Exception($errorMessage);
+            throw new \UnexpectedValueException($errorMessage);
         }
 
         $this->initInfo(json_decode($response));

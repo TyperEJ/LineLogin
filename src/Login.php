@@ -13,19 +13,27 @@ class Login {
         $this->curl = new Curl();
     }
 
-    public function requestToken($code,$redirectUri = '')
+    public function requestToken($code,$redirectUri = null)
     {
         $params = [
             'grant_type' => 'authorization_code',
-            'redirect_uri'=> $redirectUri ?? $this->getCurrentUrl(),
-            'code'=> $code,
-            'client_id'=> $this->clientId,
-            'client_secret'=> $this->clientSecret,
+            'redirect_uri' => $redirectUri ?? $this->getCurrentUrl(),
+            'code' => $code,
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
         ];
 
-        $response = $this->curl->post(UrlEnum::TOKEN_URL,$params);
+        $response = $this->curl->post(UrlEnum::TOKEN_URL, $params);
 
-        return new UserInfo($response);
+        try {
+
+            return new UserInfo($response);
+
+        } catch (\UnexpectedValueException $e) {
+
+            $error = $e->getMessage() . "::" . json_encode($params);
+            throw new \UnexpectedValueException($error);
+        }
     }
 
     private function getCurrentUrl()
