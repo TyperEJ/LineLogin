@@ -39,7 +39,7 @@ class UserInfo
             throw new \Exception('Friendship Error');
         }
 
-        $this->friendship = json_decode($response)->friendFlag;
+        return json_decode($response)->friendFlag;
     }
 
 }
