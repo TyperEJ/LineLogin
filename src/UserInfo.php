@@ -1,4 +1,5 @@
 <?php
+
 namespace TyperEJ\LineLogin;
 
 class UserInfo
@@ -10,7 +11,7 @@ class UserInfo
 
     public function __construct($response)
     {
-        if(isset(json_decode($response)->error)){
+        if (isset(json_decode($response)->error)) {
             $errorMessage = json_decode($response)->error_description ?? 'Info Response Error';
             throw new \UnexpectedValueException($errorMessage);
         }
@@ -35,8 +36,11 @@ class UserInfo
 
         $response = $curl->get(UrlEnum::STATUS_URL);
 
-        if(!isset(json_decode($response)->friendFlag)){
-            throw new \Exception('Friendship Error');
+        if (!isset(json_decode($response)->friendFlag)) {
+
+            $error = 'Friendship Error::' . json_encode($response);
+            throw new \Exception($error);
+
         }
 
         return json_decode($response)->friendFlag;
