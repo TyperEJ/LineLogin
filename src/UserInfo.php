@@ -4,10 +4,8 @@ namespace TyperEJ\LineLogin;
 
 class UserInfo
 {
-    public $uid;
-    public $name;
-    public $picture;
     private $accessToken;
+    protected $info;
 
     public function __construct($response)
     {
@@ -22,12 +20,19 @@ class UserInfo
     private function initInfo($response)
     {
         $parser = new Parser($response->id_token);
-        $info = $parser->getPayload()->parse();
+        $this->info = $parser->getPayload()->parse();
 
-        $this->uid = $info['sub'];
-        $this->name = $info['name'];
-        $this->picture = $info['picture'];
         $this->accessToken = $response->access_token;
+    }
+
+    public function __get($property)
+    {
+        if($this->info[$property])
+        {
+            return $this->info[$property];
+        }
+
+        throw new  \Exception('No such information');
     }
 
     public function getFriendship()
