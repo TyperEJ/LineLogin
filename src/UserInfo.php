@@ -27,7 +27,7 @@ class UserInfo
 
     public function __get($property)
     {
-        if($this->info[$property])
+        if(isset($this->info[$property]))
         {
             return $this->info[$property];
         }
