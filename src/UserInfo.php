@@ -15,9 +15,9 @@ class UserInfo
             throw new \UnexpectedValueException($errorMessage);
         }
 
-        $this->curl = new Curl($this->accessToken);
-
         $this->initInfo(json_decode($response));
+
+        $this->curl = new Curl($this->accessToken);
     }
 
     private function initInfo($response)
