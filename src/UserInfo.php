@@ -6,6 +6,7 @@ class UserInfo
 {
     private $accessToken;
     protected $info;
+    protected $curl;
 
     public function __construct($response)
     {
@@ -13,6 +14,8 @@ class UserInfo
             $errorMessage = json_decode($response)->error_description ?? 'Info Response Error';
             throw new \UnexpectedValueException($errorMessage);
         }
+
+        $this->curl = new Curl($this->accessToken);
 
         $this->initInfo(json_decode($response));
     }
@@ -37,9 +40,7 @@ class UserInfo
 
     public function getFriendship()
     {
-        $curl = new Curl($this->accessToken);
-
-        $response = $curl->get(UrlEnum::STATUS_URL);
+        $response = $this->curl->get(UrlEnum::STATUS_URL);
 
         if (!isset(json_decode($response)->friendFlag)) {
 
@@ -49,6 +50,20 @@ class UserInfo
         }
 
         return json_decode($response)->friendFlag;
+    }
+
+    public function getProfile()
+    {
+        $response = $this->curl->get(UrlEnum::PROFILE_URL);
+
+        if (!isset(json_decode($response)->userId)) {
+
+            $error = 'Profile Error::' . json_encode($response);
+            throw new \Exception($error);
+
+        }
+
+        return json_decode($response);
     }
 
 }
