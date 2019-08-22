@@ -6,7 +6,7 @@ class Login {
     protected $clientSecret;
     protected $curl;
 
-    public function __construct($clientId,$clientSecret)
+    public function __construct($clientId,$clientSecret = null)
     {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
@@ -15,6 +15,11 @@ class Login {
 
     public function requestToken($code,$redirectUri = null)
     {
+        if(!$this->clientSecret)
+        {
+            throw new \UnexpectedValueException('ClientSecret is required');
+        }
+
         $params = [
             'grant_type' => 'authorization_code',
             'redirect_uri' => $redirectUri ?? $this->getCurrentUrl(),
