@@ -15,7 +15,7 @@ $user = $login->requestToken($_GET('code'));
 ```php
 use TyperEJ\LineLogin\Login;
 
-$login = new Login(CHANNEL_ID,CHANNEL_SECRET);
+$login = new Login(CHANNEL_ID);
 $url = $login->generateLoginUrl(options);
 ```
 ## REFERENCE
